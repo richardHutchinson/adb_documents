@@ -1,0 +1,80 @@
+ADB Day 2
+-------------------------------------------------------------------------------
+{
+   "_id": "_design/users",
+   "_rev": "7-5c72a1742e89a11145caae8971fb34aa",
+   "views": {
+       "all1": {
+           "map": "function(doc){if(doc.type === 'user') emit(null,doc);}"
+       },
+       "all2": {
+           "map": "function(doc){if(doc.type === 'user') emit(doc.name,doc);}"
+       }
+   }
+}
+-------------------------------------------------------------------------------
+http://127.0.0.1:5984/twitter1201/_design/users/_view/all1
+
+http://127.0.0.1:5984/twitter1201/_design/users/_view/all2
+
+http://127.0.0.1:5984/twitter1201/_design/users/_view/all2?startkey="JA"
+
+http://127.0.0.1:5984/twitter1201/_design/users/_view/all2?key="John Doe"
+
+-------------------------------------------------------------------------------
+{
+   "_id": "_design/tweets",
+   "views": {
+       "all": {
+           "map": "function(doc) { if (doc.type === 'user') emit(doc.name, doc); else if ((doc.type === 'tweet') && (doc.sender != null)) emit([ doc.sender, doc._id ], doc); }"
+       }
+   }
+}
+-------------------------------------------------------------------------------
+http://127.0.0.1:5984/twitter1201/_design/tweets/_view/all
+
+-------------------------------------------------------------------------------
+Sub-Documents
+
+{
+   "_id": "298a6ef1cfb202cc1f3f81047f00123f",
+   "_rev": "4-c9f01ef33d916845ee0962d604b73757",
+   "sender": "user:jcabibbo",
+   "type": "tweet",
+   "tweet": "I like Turtles!!!!",
+   "len": 18,
+   "recipients": [
+       {
+           "recipientId": "user:BCampbel"
+       },
+       {
+           "recipientId": "user:JKahan"
+       }
+   ]
+}
+-------------------------------------------------------------------------------
+{
+   "_id": "_design/tweets",
+   "views": {
+       "all": {
+           "map": "function(doc) { if (doc.type === 'user') emit(doc.name, doc); else if ((doc.type === 'tweet') && (doc.sender != null)) emit([ doc.sender, doc._id ], doc); }"
+       },
+       "sumLen": {
+           "map": "function(doc) { if (doc.type === 'user') emit(doc.name, doc); else if ((doc.type === 'tweet') && (doc.sender != null)) emit([ doc.sender, doc._id ], doc); }",
+           "reduce": "function(key,vals,rereduce){var s = 0, c = 0; if (rereduce == false){for (var v = 0; v < vals.length; v++){var doc = vals[v]; if (doc.len != null){s+=doc.len; c+=1;}}} else {for (var v = 0; v < vals.length; v++){s += vals[v].totalChars, c += vals[v].TweetCount}}return {totalChars: s, TweetCount: c, Avg: s/c}}"
+       }
+   }
+}
+-------------------------------------------------------------------------------
+http://127.0.0.1:5984/twitter1201/_design/tweets/_view/all
+
+http://127.0.0.1:5984/twitter1201/_design/tweets/_view/sumLen
+
+http://127.0.0.1:5984/twitter1201/_design/tweets/_view/sumLen?reduce=false
+
+http://127.0.0.1:5984/twitter1201/_design/tweets/_view/sumLen?group_level=2
+
+http://127.0.0.1:5984/twitter1201/_design/tweets/_view/sumLen?group_level=1
+
+-------------------------------------------------------------------------------
+ 

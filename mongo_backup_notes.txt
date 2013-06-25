@@ -1,0 +1,4 @@
+$ mongodump -d itunes2 -o backup
+
+$ mongorestore -d itunes2_admin backup/itunes2
+	- itunes2_admin did not exist (now it does with the itunes2 backup data). backup/itunes2 were folders which contained the itunes2.bson file (backup file)

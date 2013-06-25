@@ -1,0 +1,11 @@
+* collections:
+
+- same code as the update, though add square brackets [] and bracers {}
+
+----
+
+* pretty()
+
+- use pretty() at the end of a find
+	- ex: db.itunes2.find({artist:"artist_a"}).pretty();
+	- this will display an object. the object will be tabbed

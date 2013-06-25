@@ -1,0 +1,15 @@
+* updating filds:
+	- there may be a way to update a fild in one step by using findAndModify() - to find more information about this type db.dataBaseName.help() - it should be listed
+
+* updating records:
+	- first:
+		- x = db.test1.findOne({name:"namea"});
+
+	- second:
+		- x.name = "name";
+
+	- third:
+		- db.test1.save(x);
+
+	- fourth:
+		- db.test1.find();

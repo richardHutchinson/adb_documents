@@ -1,0 +1,57 @@
+body{margin:0;font-size:12px;font-family:"Tw Cen MT";}
+a{text-decoration:none;}
+#wrapper{
+	width:960px;
+	margin:0 auto;
+	overflow:auto;
+}
+span#page, a.startOver{
+	display:block;
+	margin:0 auto;
+	width:auto;
+	text-align:center;
+}
+a.startOver{
+	color:blue;
+	width:42px;
+}
+a.startOver:hover{
+	border-bottom:1px solid blue;
+	margin-bottom:-1px;
+}
+#pagination{
+	width:144px;
+	margin:10px auto;
+}
+#pagination > a{
+	display:inline-block;
+	margin:0 10px;
+	background-color:darkblue;
+	width:34px;
+	height:auto;
+	padding:8px;
+	color:white;
+	text-align:center;
+}
+table{
+	margin:0 auto;
+	background-color:#eb6841;
+}
+table td, th{
+	width:200px;
+}
+table tr td:nth-child(4), th:nth-child(4){
+	width:100px;
+}
+table tr td:nth-child(6), th:nth-child(6){
+	width:45px;
+}
+table tr:nth-child(even) td{
+	background-color:#aaa;
+}
+table tr:nth-child(odd) td{
+	background-color:#ccc;
+}
+table tr td a{
+	display:block;
+}

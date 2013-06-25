@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>iTunes Artists</title>
+<script src="/_utils/script/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+   $.getJSON('/itunes/_design/artists/_view/all', null, function(data){
+      var artists = $('#artists');
+      $.each(data.rows, function(r,row){
+         var a = $("<a/>").attr("href","#" + row.id).html(row.value.name).click(function(ev){
+            var id = $(this).attr('href').substr(1,9999);
+            $.getJSON('/itunes/_design/artists/_view/albums?reduce=false&startkey=["' + id + '",""]&endkey=["' + id + '",{}]', null, function(data) {
+               $.each(data.rows, function(r,row) {
+                  $("<p/>").html(row.value.title).appendTo('#'+row.key[0].replace(/[^a-z0-9]/gi,''));
+               });
+            });
+            return false;
+         });
+         $("<dt/>").html(a).appendTo(artists);
+         $("<dd/>").attr("id",row.id.replace(/[^a-z0-9]/gi,'')).appendTo(artists);
+      });
+   });
+});
+</script>
+</head>
+<body>
+<h1>iTunes Artists</h1>
+<dl id="artists"></dl>
+</body>
+</html>

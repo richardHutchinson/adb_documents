@@ -1,0 +1,2 @@
+- mongoHQ:
+	- research it, seems to have a better way of using mongo

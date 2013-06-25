@@ -1,0 +1,174 @@
+<html>
+<head>
+<title>iTunes Management</title>
+<script src="/_utils/script/jquery.js" type="text/javascript"></script>
+<script src="/_utils/script/jquery.couch.js" type="text/javascript"></script>
+<script type="text/javascript">
+	
+$(document).ready(function() {
+	//Load albumArtist drop down
+	var target = $("#albumArtist");
+	var artistEditText = "";
+	var albumEditText = "";
+	
+	// Load Artist List
+	$.getJSON('/itunes/_design/artists/_view/all', null, function(data){
+      var artists = $('#artists');
+      $.each(data.rows, function(r,row){ 
+		  target.append($('<option />').val(row.value._id).text(row.value.name));
+		  artistEditText = artistEditText + '<br>' + row.value.name;
+	 });
+	 
+	 document.getElementById("artistEdit").innerHTML = artistEditText + '<br><br>';
+	
+  	 });	
+	
+	// Load Album List
+	$.getJSON('/itunes/_design/albums/_view/all', null, function(data2){
+      $.each(data2.rows, function(r,row2){ 
+		  albumEditText = albumEditText + '<br><a href="#" onclick=updateAlbumSet("' + row2.value._id + '","'+ row2.value._rev +'")>' + row2.value.title + '</a>';
+	 });
+	 document.getElementById("albumEdit").innerHTML = albumEditText + '<br><br>';
+	
+  	});
+});
+
+function isExisting(obj){
+	return typeof(obj)!='undefined';
+}
+
+function cancelArtist(){
+	document.getElementById("artistId").value = "";	
+	document.getElementById("rev").value = "";	
+	document.getElementById("artist").value= "";
+}
+
+function cancelAlbum(){
+	document.getElementById("albumId").value = "";	
+	document.getElementById("rev").value = "";	
+	document.getElementById("album").value= "";
+}
+
+function addArtist(){
+	var dbname = "itunes";	
+	var blah = new Object();
+	var artistName = document.getElementById("artist").value;
+	
+	if (document.getElementById("artistId").value != ''){
+		blah._id = document.getElementById("artistId").value;
+		blah._rev = document.getElementById("rev").value;
+	} else {
+		blah._id = 'artist:' + artistName;
+	}
+	
+	blah.type = "artist";
+	blah.name = artistName;
+	$.couch.db('itunes').saveDoc(blah);
+	
+	document.getElementById("artistId").value = '';	
+	document.getElementById("rev").value = '';	
+	document.getElementById("artist").value = '';
+	
+	location.reload();
+}
+
+function updateArtistSet(artistId0,rev0){
+	document.getElementById("artistId").value = artistId0;	
+	document.getElementById("rev").value = rev0;	
+	document.getElementById("artist").value= '';
+	
+	$.getJSON('/itunes/'+artistId0, null, function(data){
+		// alert(data.name);
+      	document.getElementById("artist").value = data.name;
+	});
+	
+	document.getElementById("artistTitle").innerHTML = 'Update an Artist';
+	document.getElementById("artistButton").value = 'Update';
+}
+
+function addAlbum(){
+	var dbname = "itunes";	
+	var blah = new Object();
+	var albumName = document.getElementById("album").value;
+	var artistName = document.getElementById("albumArtist").value;
+	
+	if (document.getElementById("albumId").value != ''){
+		blah._id = document.getElementById("albumId").value;
+		blah._rev = document.getElementById("albumRev").value;
+	} else {
+		blah._id = 'album:' + albumName;
+	}
+	
+	blah.type = "album";
+	blah.title = albumName;
+	blah.artist = artistName;
+	$.couch.db('itunes').saveDoc(blah);
+	
+	document.getElementById("album").value = "";
+	document.getElementById("albumArtist").value = "";
+	
+	location.reload();
+}
+
+function updateAlbumSet(albumId0,albumRev0){
+	document.getElementById("albumId").value = albumId0;	
+	document.getElementById("albumRev").value = albumRev0;	
+	document.getElementById("album").value= '';
+	
+	// alert('/itunes/'+albumId0);
+	// alert(albumRev0);
+	
+	$.getJSON('/itunes/'+albumId0, null, function(data){
+      	document.getElementById("album").value = data.title;
+		$("#albumArtist").val(data.artist);
+	});
+	
+	document.getElementById("artistTitle").innerHTML = 'Update an Artist';
+	document.getElementById("artistButton").value = 'Update';
+}
+</script>
+
+</head>
+<body>
+<h1>iTunes Artists</h1>
+<form name="form1" id="form1">
+	<input type="hidden" name="artistId" id="artistId" value="">
+	<input type="hidden" name="rev" id="rev" value="">
+	
+	<input type="hidden" name="albumId" id="albumId" value="">
+	<input type="hidden" name="albumRev" id="albumRev" value="">
+	
+	<div id="artistTitle" style="width:300px; float:left;"><b>Add an Artist</b></div>
+	<hr style=" clear:both; height:0;">
+	
+	<div style="width:100px; float:left;">Artist:</div>
+	<div style="width:100px; float:left;"><input type="text" name="artist" id="artist"></div>
+	<div style="width:200px; float:left; margin-left:50px; text-align:right;">
+		<input type="button" id="cancel" value="Cancel" onClick="cancelArtist();">
+		<input type="button" id="artistButton" value="Save" onClick="addArtist();">
+	</div>
+	<hr style=" clear:both; height:0;">
+	
+	<div id="artistEdit" style="width:300px; float:left;"></div>
+	
+	<hr style="clear:both; height:0;">
+	
+	<div style="width:100%;"><b>Add an Album</b></div>
+	<hr style="clear:both; height:0;">
+	<div style="width:100px; float:left;">Album:</div>
+	<div style="width:100px; float:left;"><input type="text" name="album" id="album"></div>
+	<hr style=" clear:both; height:0; border:0;">
+	
+	<div style="width:100px; float:left;">Artist:</div>
+	<div style="width:100px; float:left;"><select name="albumArtist" id="albumArtist"></select></div>
+	<div style="width:100px; float:left; text-align:right;">
+		<input type="button" id="cancel" value="Cancel" onClick="cancelAlbum();">
+		<input type="button" value="Save" onClick="addAlbum();">
+	</div>
+	<hr style=" clear:both; height:0;">
+	
+	<div id="albumEdit" style="width:300px; float:left;"></div>
+	
+</form>
+</body>
+</html>

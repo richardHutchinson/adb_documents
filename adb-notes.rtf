@@ -1,0 +1,409 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fswiss\fcharset0 Arial;}}
+{\colortbl ;\red0\green0\blue255;\red0\green128\blue128;\red128\green0\blue0;\red0\green77\blue187;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\f0\fs20 * \b ADB\b0\par
+\par
+- git clone: git@wddbs.com:adb1111\par
+\par
+- Link (reference): {\field{\*\fldinst{HYPERLINK "http://www.mongodb.org/display/DOCS/Advanced+Queries"}}{\fldrslt{\ul\cf1 http://www.mongodb.org/display/DOCS/Advanced+Queries}}}\f0\fs20\par
+\par
+- \b non-relational databases\b0 : also known as "no sql databases"\par
+\tab - no forign keys\par
+\tab - there is a primary key (though its called "key" - must be unique)\par
+\tab - couchDB is a nonrelational database\par
+\tab - mongodb is a nonrelational database\par
+\par
+- \b relational databases\b0 : orical, sql server\par
+\par
+----\par
+\par
+- \b display functions\b0 :\par
+\par
+show dbs\par
+\par
+show collections\par
+\par
+db.adb1303.find().pretty();\par
+\par
+db.adb1303.distinct("type");\par
+\par
+----\par
+\par
+- \cf2\b couchDB\cf0\b0 : install "\cf3\b Couchbase Single Server Community Edition\cf0\b0 "\par
+\tab - \i program location\i0 : C:\\Program Files (x86)\\Couchbase\\Single Server\par
+\par
+\tab - \b To view couchDB's interface\b0 : {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/_utils/"}}{\fldrslt{\ul\cf1 http://127.0.0.1:5984/_utils/}}}\f0\fs20\par
+\par
+\tab - \b\i documents\b0\i0 :\par
+\tab - \b _rev\b0 : revision number - every time we do an update to the document the revision number will increment (go up) up\par
+\tab\tab - this is how the database knows what data this is (its like a time stamp)\par
+\tab\tab - it's also good for checking what updates have been done, if one user has a newer version then the other user needs to download the newest revisions to the database\par
+\tab - couchDB only does replication\par
+\par
+\tab - when looking for specific things use A-Z, a-z, 1-9 ,or A-z\par
+\tab - \b _design\b0  - reserved word\par
+\par
+\tab - \b to view all docs\b0 : {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/twitter1111/_all_docs"}}{\fldrslt{\ul\cf1 http://127.0.0.1:5984/twitter1111/_all_docs}}}\f0\fs20\par
+\tab - \b return entire doc\b0 : {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/twitter1111/_all_docs?include_docs=true"}}{\fldrslt{\ul\cf1 http://127.0.0.1:5984/twitter1111/_all_docs?include_docs=true}}}\f0\fs20\par
+\tab\tab - this will return the full document (if asked to "return the full record" do the above)\par
+\tab - \b view doc by_id\b0 : {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/twitter1111/user:rhutchinson"}}{\fldrslt{\ul\cf1 http://127.0.0.1:5984/twitter1111/user:rhutchinson}}}\f0\fs20\par
+\tab\tab\tab\tab\tab\tab\tab\tab |\par
+\tab\tab\tab\tab\tab\tab\tab first initial last name\par
+\par
+\tab - \b view doc by range\b0 : {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/twitter1111/_all_docs?include_docs=true&startkey="user:a"&endkey="user:m"}}{\fldrslt{\ul\cf1 http://127.0.0.1:5984/twitter1111/_all_docs?include_docs=true&startkey="user:a"&endkey="user:m}}}\f0\fs20 "\par
+\par
+\tab - \b to view all tweets\b0 : {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/twitter1201/_design/tweets/_view/all"}}{\fldrslt{\ul\cf1 http://127.0.0.1:5984/twitter1201/_design/tweets/_view/all}}}\f0\fs20  \par
+\par
+\tab - viewing views\par
+\tab - 127.0.0.1:5984/twitter1201/_design/tweets/_view/sumAge\par
+\tab - 127.0.0.1:5984/twitter1201/_design/tweets/_view/sumAge?reduce=false\par
+\tab - {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/twitter1201/_design/tweets/_view/sumAge?group_level=2"}}{\fldrslt{\ul\cf1 http://127.0.0.1:5984/twitter1201/_design/tweets/_view/sumAge?group_level=2}}}\f0\fs20\par
+\par
+\tab - 127.0.0.1:5984/twitter1201/_design/tweets/_view/sumLen\par
+\par
+\tab - uploading html files to a JSON page\par
+\tab - 127.0.0.1:5984/twitter1201/_design/tweets/helloWorld.html\par
+\tab - {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/twitter1201/_design/tweets/tweets.html"}}{\fldrslt{\ul\cf1 http://127.0.0.1:5984/twitter1201/_design/tweets/tweets.html}}}\f0\fs20\par
+\par
+\tab - \b day 1\b0 :\par
+\par
+\tab\tab - \b emit\b0 : means echo or return\par
+\par
+\{\par
+   "_id": "_design/users",\par
+   "_rev": "11-e629561b9980d70953104b588e6327e4",\par
+   "views": \{\par
+       "all1": \{\par
+           "map": "function(doc)\{if(doc.type === 'user') emit(null,doc);\}"\par
+       \}\par
+   \}\par
+\}\par
+\par
+{\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/twitter1111/_design/users/_view/all1"}}{\fldrslt{\ul\cf1 http://127.0.0.1:5984/twitter1111/_design/users/_view/all1}}}\f0\fs20\par
+\par
+- then add the following -\par
+\par
+\{\par
+   "_id": "_design/users",\par
+   "_rev": "14-24c07b0a1162af507162fed9ad22cd2e",\par
+   "views": \{\par
+       "all1": \{\par
+           "map": "function(doc)\{if(doc.type === 'user') emit(null,doc);\}"\par
+       \},\par
+       "all2": \{\par
+           "map": "function(doc) \{ if(doc.type === 'artist') emit(doc.name,doc);\}"\par
+       \}\par
+   \}\par
+\}\par
+\par
+--\par
+\par
+- to get the ip in terminal\par
+\tab - ifconfig > then enter\par
+\par
+- replicator:\par
+\tab - right hand navigation\par
+\tab\tab - local database: twitter...\par
+\tab\tab - to: remote database: {\field{\*\fldinst{HYPERLINK "http://10.0.0.0:5984/twitter1201"}}{\fldrslt{\ul\cf1 http://10.0.0.0:5984/twitter1201}}}\f0\fs20\par
+\tab\tab\tab - think the students put their ip's where the 10.0.0.0... is\par
+\tab\tab - check continues\par
+\par
+--\par
+\par
+\{\par
+   "_id": "_design/tweets",\par
+   "views": \{\par
+       "all": \{\par
+           "map": "function(doc) \{ if (doc.type === 'user') emit(doc.name, doc); else if ((doc.type === 'tweet') && (doc.sender != null)) emit([ doc.sender, doc._id ], doc); \}"\par
+       \}\par
+   \}\par
+\}\par
+\par
+- the doc._id makes the doc.sender unique\par
+\par
+* \b sub objects in mongo (sub documents)\b0 :\par
+\par
+x = \{children:[\{name:"Sally",age:4\},\{name:"Jimmy",age:11\}]\};\par
+\par
+--\par
+\par
+\tab - day 2 lab: answers, some are out of date; use the ADB Lab 2 text file. the views function in there is the latest\par
+\par
+----\par
+\par
+\tab - to bring up IP on mac computers: open terminal, then type IPconfig\par
+\par
+----\par
+\tab - \b replicator\b0 :\par
+\tab\tab - remote database: {\field{\*\fldinst{HYPERLINK "http://x.x.x.x:5984/twitter1111"}}{\fldrslt{\ul\cf1 http://x.x.x.x:5984/twitter1111}}}\f0\fs20\par
+\tab\tab\tab - the x's are the ip one wishes to point at\par
+\par
+\tab - can run on mobile devices\par
+\tab - saves data incase something happens (power out, etc...)\par
+\tab - JSON documented-oriented database written in erlang\par
+\tab - open source\par
+\par
+\tab - \b note\b0 : \b membase server\b0 : is used for session variables (managing large amounts of data in large session variables)\par
+\par
+- \cf2\b mongo\cf0\b0 :\par
+\par
+\tab - \b mongo testing IP\b0 : {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:28017/"}}{\fldrslt{\ul\cf1 http://127.0.0.1:28017/}}}\f0\fs20\par
+\par
+\tab - is built to go on servers not devices\par
+\tab - delicate (is power goes out, database would not have saved)\par
+\tab - fast - though when it runs out of memory it crashes\par
+\par
+\tab - goes in server, must be managed, where as couchDB does mobile, etc...\par
+\par
+\par
+- \b creating a database type\b0 : \b >\b0  useadb1111test\par
+\tab - the greaterthan sign ">" - useadb1111test is just the name of the new database\par
+\par
+- \b showing the information in the database type\b0 : typeTheDatabaseName.\b find\b0 ()\par
+\par
+- \b updating\b0 : must use: db.typeTheDatabaseName.\b findOne\b0 (\{name:"john Doe"\})\par
+\tab - then one can assign a "variable" type of charater to the update:\par
+\tab\tab - x = db.typeTheDatabaseName.\b findOne\b0 (\{name:"john Doe"\})\par
+\tab\tab\tab - then one can type > x and the info will appear\par
+\tab - when using php or coldfusion to update, use the save function, though put the updated information in the fields to update (put any fields that will remain the same too). this will update the id and the information.\par
+\par
+- \b save\b0 : db.adb1111test.save(x)\par
+\tab - adb1111test is the database, and x was the variable we set the database to\par
+\par
+- \b removing\b0 : db.adb1111test.remove(\{type:"admin"\}) - this will remove all admins, can do name:"john doe" to remove john\par
+\par
+----\par
+\par
+- \b CRUD\b0 : slide DBS_Day1b in the dbs folder (in smartgit), create, read, update, and delete\par
+\par
+- \b cluster\b0 : multiple webservers talking to the rounter (note the router talkes to the user)\par
+\par
+- webservers go to the database (mysql) - hot backup used to be a backup for databases\par
+\par
+- sharding: horizontal partition in a database or search engine\par
+\par
+----\par
+\par
+- \cf3\b note\cf0\b0 : in couchDB we can only sort by, or search by keys\par
+\par
+- one can put in a key by:\par
+\tab - ip/location/document/_view/all?key="keyName"\par
+\par
+- \b sub-documents\b0 :\par
+\tab - in a relational database, if we wanted to track the recipients of the tweets (aka we used followers in the lab). how would we do this?\par
+\tab\tab - add a name, then use square brackets. list the names inside the brackets\par
+\par
+- \b reduce\b0 :\par
+\tab - add a new field to all tweets\par
+\tab\tab - Len = Number of characters on the tweet.\par
+\tab - add a new field age & income to each user\par
+\tab - enter these fields as numeric\par
+\par
+- everything in couchDB is json formatted\par
+\par
+----\par
+\par
+* \b day 2\b0  lecture activity\par
+\par
+tweet:\par
+\tab - Len (find the length of the tweet)\par
+users:\par
+\tab - age (use a number aka numeric value)\par
+\tab - Income (use a number aka numeric value)\par
+\par
+- \cf3\b note\cf0\b0 : non relational databases one needs to query a cluster to get the data\par
+\tab - aka, use syntax that looks like javascript (aka its procedrial code) - looks like it uses dot syntax, ex: if(doc.age != null) \{ ...\par
+\par
+----\par
+\par
+-\b  day 3\b0  will be a all day lab\par
+\par
+- ituns database\par
+\tab - create a admin interface\par
+\par
+\tab - _rev stands for revision\par
+----\par
+\par
+- useing couchDB with a server host like godaday: to use couchDB with a server like godaday - use the shared IP lesson the lecture covered in day 1\par
+\par
+----\par
+\par
+* \b changing the root\b0 :\par
+\i\tab - to change directories in command prompt type:\i0\par
+\tab\tab - cd \\folder\\folder\par
+\par
+* \b set directory as the DB path\b0 :\par
+\tab - think this is used to show the location of the database\par
+\tab - mongod --dbpath db\par
+\par
+* \b start the mongo server run\b0 :\par
+\tab - mongod\par
+\par
+* \b start command promt (pc) or terminal (mac) access\b0 :\par
+\tab - mongo\par
+\par
+----\par
+\par
+* \b map\b0 , \b reduce\b0  (look at example adb mongo lab1)\par
+\tab - map: the map gets fed into the reduce - the value that is returned from the map conditions\par
+\tab - reduce: is a key word, and will run the function and sum up the total in mongo\par
+\par
+- \b map, reduce\b0  in mongo - is only for averages\par
+\par
+----\par
+\par
+- \b day 4\b0 :\par
+\par
+- \cf4\b mongo\cf0\b0 :\par
+\par
+- group() : means get everything\par
+\par
+--\par
+\par
+- index (note - not a tag): used for faster searching\par
+\par
+--\par
+\par
+- ctrl + c will \b reset the path\b0 , use this if ... is showing\par
+- \b to connect to an existing database\b0  type (after typing mongo): \b use databaseName\b0\par
+\tab - use this for creating a new database too. type \b use newDatabaseName\b0\par
+\par
+--\par
+\par
+- in the \b first\b0  command prompt window type:\par
+\par
+- cd mongodb/bin\par
+\par
+- dir\par
+\par
+- mongod --dbpath db\par
+\par
+\b - or -\b0  \par
+\par
+- in the \b first Git Bash\b0  prompt window type:\par
+\par
+- change directories\par
+\tab - cd mongodb/bin\par
+\par
+- to create a directory\par
+\tab - mkdir db\par
+\par
+- set the db path\par
+\tab - ./mongod --dbpath db\par
+\par
+-\par
+\par
+- in the \b second\b0  command prompt window type\par
+\par
+- cd mongodb/bin\par
+\par
+- mongo\par
+\tab - note: ./mongo for mac\par
+\par
+- if one wants to switch to another database use, \b use\b0  \b databaseName\b0 . same for creating a new one\par
+\par
+- to save in one line: db.test1.save(\{type:"user",name:"Name of person"\})\par
+\tab - one can use \b save\b0  to update documents, records and fields as well\par
+\par
+\b - or -\b0\par
+\par
+- in the \b second Git Bash\b0  prompt window type:\par
+\par
+- start mongo server\par
+\tab - ./mongod\par
+\par
+- start git bash prompt window access\par
+\tab - ./mongo\par
+\par
+- \b creating a new database\b0 :\par
+\tab - type ./mongo or mongo then type \b use databaseName\b0  - a new database will be created\par
+\par
+--\par
+\par
+- \b exit\b0 :\par
+\tab - once inside a database one can type \b exit\b0  the database\par
+\par
+--\par
+\par
+- \b show dbs\b0 :\par
+\tab - this will show all the databases\par
+\tab - \b note\b0 : this goes in the command after typing mongo\par
+\tab\tab - \b ex\b0 : > show dbs\par
+\par
+--\par
+\par
+- db.test1.find(\{type:'user'\}).sort(\{rich\})\par
+\par
+- db.test1.find(\{type:'user'\})\par
+\par
+- to connect to another database: mongo/nameOfDatabase\par
+\par
+--\par
+\par
+- \b creating a new field and record\b0 :\par
+\par
+- x = db.test1.findOne(\{name:'rich hutchinson'\})\par
+\par
+- x.age = 25\par
+\par
+- x "x will now show the information based on the above asignment\par
+\par
+- db.test1.save(x)\par
+\par
+--\par
+\par
+- \b removing fields\b0 : db.test1.remove(\{field:"record"\})\par
+\tab - make sure to have a value in the remove(\{\}) parameter, otherwise all of the information in the database will be removed\par
+\par
+--\par
+\par
+- \b updating fields\b0 :\par
+\par
+x = db.test1.findOne(\{name:"test"\})\par
+\par
+x.heightInches = 50 //use this to create a new field\par
+\tab - the result will be 50\par
+\par
+db.test1.save(x)\par
+\par
+db.test1.find() //the field should now display a "heightInches" field with a record of 50\par
+\par
+\tab - \b findAndModify\b0 :\par
+\tab\tab - db.test1.help();\par
+\par
+--\par
+\par
+- \b day 2\b0 :\par
+\par
+\tab - \b note\b0 : persistentId will be the primary key\par
+\tab - need 5 or 6 fileds\par
+\tab - cron jobs is a set of commands that will run at a certain time\par
+\par
+\tab - the update should be <a href="trackedit.php?id=the id number">edit</a>\par
+\tab\tab\tab\tab\tab                         |\par
+\tab\tab\tab\tab\tab this will be the id from the mongo database (the _id)\par
+\par
+\tab - \b $set\b0\par
+\tab\tab - use this to specify what area in the document to change\par
+\tab\tab - mostly used in the new functions \b insert\b0  and \b update\b0\par
+\par
+--\par
+\par
+- \b day 3\b0 : same project as day 2 though use pagination and jQuery\par
+\tab - pagination: ex: photogallery; taking the photos and limiting the number of images. then having any extra images listed on another page or display only when the user clicks a number at the bottom of the page to display the next set of images\par
+\par
+----\par
+\par
+* \b backup and restore\b0 :\par
+\par
+$ mongodump -d itunes2 -o backup\par
+\par
+$ mongorestore -d itunes2_admin backup/itunes2\par
+\tab - itunes2_admin did not exist (now it does with the itunes2 backup data). backup/itunes2 were folders which contained the itunes2.bson file (backup file)\par
+\par
+----\par
+\par
+* \b update and $push\b0 :\par
+\par
+db.itunes_blog.update(\{persistentId: 2222\},\{$push:\{comments:\{author:"test2a"\},\{"dateTime":"2012-01- 01"\}\}\});\par
+}
+ 

@@ -1,0 +1,3 @@
+call_user_func_array("array_merge",//array var);
+
+array_unique();

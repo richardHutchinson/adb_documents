@@ -1,0 +1,5 @@
+- $unset
+	- used to unset a value
+
+- indexing
+	- similar to a book's index. indexes are used to limit the results. indexes can be specified even more by using unique identifiers.

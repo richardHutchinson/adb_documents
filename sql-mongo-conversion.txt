@@ -1,0 +1,2 @@
+find is the same as select
+save is the same as insert
